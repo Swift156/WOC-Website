@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WOC</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========== COOKIE CONSENT BAR (inline states) ========== -->
+  <div id="cookieConsent" role="dialog" aria-label="Cookie consent" style="display: none;">
+    <!-- Main state -->
+    <div id="cookieMain" class="cookie-state">
+      <button class="icon-btn cc-close" onclick="dismissConsent()" aria-label="Close">✕</button>
+      <div class="cc-title">We respect your<br>privacy</div>
+      <p class="cc-body">
+        We use cookies and similar technologies to enhance your experience, remember your preferences, and help us share God's message effectively. You can choose to accept or decline optional cookies.
+      </p>
+      <div class="cc-actions">
+        <button class="cc-btn accept" onclick="acceptAllCookies()">Accept All</button>
+        <button class="cc-btn reject" onclick="rejectAllCookies()">Reject All</button>
+      </div>
+      <div class="cc-links">
+        <button class="cc-link" id="showPrivacyBtn">View Data Privacy Notice</button>
+        <button class="cc-link" id="showPrefsBtn">Manage Preferences</button>
+      </div>
+    </div>
+
+    <!-- Privacy notice state -->
+    <div id="cookiePrivacy" class="cookie-state" style="display: none;">
+      <button class="icon-btn cc-back" onclick="showMainState()" aria-label="Back">←</button>
+      <div class="cc-title">Data Privacy Notice</div>
+      <div class="cc-body-scroll">
+        <p>Warriors of Christ is committed to protecting your personal data. This privacy notice explains how we collect, use, and safeguard your information when you visit our website.</p>
+        <h3>What data do we collect?</h3>
+        <p>We may collect:</p>
+        <ul>
+          <li>Your name, email, and phone number when you fill in membership or contact forms.</li>
+          <li>Usage data (e.g., pages visited, time spent) through cookies and analytics tools.</li>
+          <li>Any information you voluntarily share in testimonies, prayer requests, or enquiries.</li>
+        </ul>
+        <h3>How do we use your data?</h3>
+        <p>We use your data to:</p>
+        <ul>
+          <li>Respond to your enquiries and prayer requests.</li>
+          <li>Add you to our membership database (with your consent).</li>
+          <li>Improve our website and understand how visitors engage with our content.</li>
+          <li>Share ministry updates and resources (if you opt in).</li>
+        </ul>
+        <h3>Your rights</h3>
+        <p>You have the right to access, correct, or delete your personal data. Contact us at <a href="mailto:privacy@warriorsofchrist.org">privacy@warriorsofchrist.org</a> for any requests.</p>
+        <h3>Third‑party services</h3>
+        <p>We use trusted third‑party services (e.g., website analytics, email platforms) that may process your data under their own privacy policies. We only share what is necessary.</p>
+        <p><strong>By using this website, you agree to this privacy notice.</strong></p>
+      </div>
+      <button class="cc-btn back-btn" onclick="showMainState()">Back</button>
+    </div>
+
+    <!-- Preferences state -->
+    <div id="cookiePrefs" class="cookie-state" style="display: none;">
+      <button class="icon-btn cc-back" onclick="showMainState()" aria-label="Back">←</button>
+      <div class="cc-title">Cookie Preferences</div>
+      <div class="pref-group">
+        <label class="pref-checkbox">
+          <input type="checkbox" id="prefEssential" checked disabled> Essential cookies (always active)
+        </label>
+        <p class="pref-desc">Necessary for site functionality, security, and to remember your cookie choices.</p>
+      </div>
+      <div class="pref-group">
+        <label class="pref-checkbox">
+          <input type="checkbox" id="prefAnalytics"> Analytics & performance
+        </label>
+        <p class="pref-desc">Help us understand how visitors interact with our site so we can improve.</p>
+      </div>
+      <div class="pref-group">
+        <label class="pref-checkbox">
+          <input type="checkbox" id="prefMarketing"> Marketing & personalisation
+        </label>
+        <p class="pref-desc">Used to deliver relevant content and messages about our ministry.</p>
+      </div>
+      <div class="pref-actions">
+        <button class="cc-btn accept" onclick="acceptAllCookies()">Accept All</button>
+        <button class="cc-btn reject" onclick="rejectAllCookies()">Reject All</button>
+        <button class="cc-btn" onclick="savePreferences()">Save Preferences</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========== NAVIGATION ========== -->
+  <nav id="mainNav">
+    <a href="#home" class="nav-logo">Warriors of Christ</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#expect">About</a></li>
+      <li><a href="#mission">Mission</a></li>
+      <li><a href="#activities">Activities</a></li>
+      <li><a href="#leadership">Leadership</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#giving" class="nav-cta">Donate</a></li>
+    </ul>
+    <div class="burger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+  </nav>
+
+
+  <!-- ========== HERO SECTION ========== -->
+  <section id="home">
+    <div class="bg-scrim" style="background: linear-gradient(180deg, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.20) 20%, transparent 45%, rgba(0,0,0,0.55) 65%, rgba(0,0,0,0.85) 80%, rgba(0,0,0,0.97) 100%); z-index: 1;"></div>
+    <div class="bg-scrim" style="background: linear-gradient(90deg, rgba(0,0,0,0.45) 0%, transparent 60%); z-index: 2;"></div>
+
+    <div class="hero-stage">
+      <div class="stage">
+        <img src="WocLogo.jpeg" alt="WOC Logo" class="stage-logo">
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <span class="hero-kicker">Warriors of Christ Organisation</span>
+      <h1 class="hero-title">Where Faith<br>Meets Community</h1>
+      <p class="hero-sub">Welcome to a place where authentic faith comes to life. At WOC we raise up bold, faithful leaders who carry the light of Jesus into every sphere of influence.</p>
+      <div class="hero-btns">
+        <a href="#membership" class="btn btn-fill">Get connected</a>
+        <a href="#expect"     class="btn btn-glass">Learn more</a>
+      </div>
+    </div>
+
+    <div class="scroll-hint"><div class="scroll-hint-dot"></div><div class="scroll-hint-line"></div></div>
+  </section>
+
+  <div class="section-rule"></div>
+
+  <!-- ========== STAT BAR (modern minimal) ========== -->
+  <div class="stat-bar-modern">
+    <div class="stat-item-modern">
+      <div class="stat-num-modern" data-target="200">200</div>
+      <div class="stat-label-modern">Members</div>
+    </div>
+    <div class="stat-item-modern">
+      <div class="stat-num-modern" data-target="3">3+</div>
+      <div class="stat-label-modern">Years of Ministry</div>
+    </div>
+    <div class="stat-item-modern">
+      <div class="stat-num-modern" data-target="7">7</div>
+      <div class="stat-label-modern">Events Held</div>
+    </div>
+    <div class="stat-item-modern">
+      <div class="stat-num-modern">∞</div>
+      <div class="stat-label-modern">Faith</div>
+    </div>
+  </div>
+  <div class="section-rule"></div>
+
+
+  <!-- ========== WHAT TO EXPECT ========== -->
+  <section id="expect">
+    <div class="bg-wrap">
+      <img src="" alt="WOC congregation" style="object-position: center 55%;">
+      <div class="bg-scrim expect-scrim"></div>
+    </div>
+    <div class="inner">
+      <div class="expect-inner">
+        <div class="float-cluster">
+          <div class="fc fc-1"><img src="" alt="WOC devotional moment"></div>
+          <div class="fc fc-2"><img src="" alt="WOC prayer"></div>
+          <div class="fc fc-3"><img src="" alt="WOC worship"></div>
+          <div class="fc fc-4"><img src="" alt="WOC gathering"></div>
+          <div class="fc fc-5"><img src="" alt="WOC community"></div>
+        </div>
+        <h2 class="expect-title">What to expect</h2>
+        <p class="expect-copy">WOC is a safe, intimate space where believers can grow — free from judgment — as we pursue holiness and surrender fully to Jesus. We recognise the gaps that exist in traditional church settings and seek to build one another up in love and truth.</p>
+        <a href="#membership" class="btn btn-outline">Get involved</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== MISSION & VISION ========== -->
+  <section id="mission">
+    <div class="bg-wrap">
+      <img src="" alt="WOC worship" style="object-position: center 40%;">
+      <div class="bg-scrim mission-scrim"></div>
+    </div>
+    <div class="glow-orb orb-gold" style="width:500px;height:500px;top:-120px;right:-80px;animation-delay:2s;"></div>
+    <div class="glow-orb orb-gold-light" style="width:300px;height:300px;bottom:0;left:40px;animation-delay:4s;"></div>
+    <div class="inner">
+      <div class="mission-layout">
+        <div class="mission-left">
+          <span class="eyebrow">Who we are</span>
+          <h2 class="section-title">Called.<br>Equipped.<br>Deployed.</h2>
+          <p class="section-lead" style="margin-top:20px;">Every soul is a battlefield. We are the ones who stand in the gap.</p>
+        </div>
+        <div>
+          <div class="m-block"><span class="m-label">Our Mission</span><p class="m-text">We are building a generation of young people who stand firmly rooted in faith, grounded in truth, and driven to share the gospel. Warriors don't wait for war to come to them — they go.</p></div>
+          <div class="m-block"><span class="m-label">Our Vision</span><p class="m-text">From local neighbourhoods to nations across the globe, God's Kingdom doesn't stop at borders — and neither do we. We are committed to seeing His light transform every sphere of society.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== SPIRITUAL ACTIVITIES ========== -->
+  <section id="activities">
+    <div class="bg-wrap">
+      <img src="" alt="WOC prayer gathering" style="object-position: center 30%;">
+      <div class="bg-scrim activities-scrim"></div>
+    </div>
+    <div class="inner">
+      <div class="act-header"><span class="eyebrow">Spiritual Disciplines</span><h2 class="section-title">Discipline &amp; Devotion</h2></div>
+      <div class="act-list">
+        <div class="act-row"><div class="act-tag">Weekly</div><div><div class="act-title">Monday Fasting</div><div class="act-desc">Dry fast from 6:00 AM to 6:00 PM every Monday. We deny the flesh to feed the spirit — not as a burden, but as a chosen discipline that sharpens the warrior.</div></div></div>
+        <div class="act-row"><div class="act-tag">Monthly<br>Optional</div><div><div class="act-title">First Three Days Fast</div><div class="act-desc">The first three days of every month. Choose your fast: 6AM–6PM, liquid only, or dry. Every level of sacrifice is honoured. Come as you are, give what you have.</div></div></div>
+        <div class="act-row"><div class="act-tag">Daily<br>Optional</div><div><div class="act-title">Night Watch Prayer</div><div class="act-desc">Monday through Friday — midnight and 3:00 AM. These are the hours of intercession and spiritual warfare. Not everyone is called to this. But those who are, know it.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== PLANS ========== -->
+  <section id="plans">
+    <div class="bg-wrap">
+      <img src="" alt="WOC outreach">
+      <div class="bg-scrim plans-scrim"></div>
+    </div>
+    <div class="inner">
+      <div class="plans-head"><div><span class="eyebrow">The Road Ahead</span><h2 class="section-title">Plans of the Warriors</h2></div><p class="section-lead">God-given assignments for this season. Each plan is a step; each step is obedience.</p></div>
+      <div class="plans-grid">
+        <div class="p-cell"><span class="p-num">01</span><div class="p-title">City Outreach</div><div class="p-desc">Evangelism campaigns across local neighbourhoods and townships — bringing the gospel where people actually live.</div></div>
+        <div class="p-cell"><span class="p-num">02</span><div class="p-title">Youth Discipleship</div><div class="p-desc">Intensive discipleship equipping the next generation with the Word, the Spirit, and the courage to stand.</div></div>
+        <div class="p-cell"><span class="p-num">03</span><div class="p-title">National Expansion</div><div class="p-desc">WOC chapters in every province — a unified network of prayer and warfare across South Africa.</div></div>
+        <div class="p-cell"><span class="p-num">04</span><div class="p-title">Nations Impact</div><div class="p-desc">Beyond our borders — partnering with global ministries to carry the gospel where it hasn't yet reached.</div></div>
+        <div class="p-cell"><span class="p-num">05</span><div class="p-title">Media Ministry</div><div class="p-desc">Using digital platforms to broadcast truth, testimonies, and the power of God to a generation that lives online.</div></div>
+        <div class="p-cell"><span class="p-num">06</span><div class="p-title">Prayer Towers</div><div class="p-desc">24/7 intercession hubs — physical and virtual — that never stop crying out before the throne.</div></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== LEADERSHIP ========== -->
+  <section id="leadership">
+    <div class="bg-wrap">
+      <img src="" alt="WOC event" style="object-position: center 60%;">
+      <div class="bg-scrim leadership-scrim"></div>
+    </div>
+    <div class="inner">
+      <div class="lead-head"><span class="eyebrow">The Team</span><h2 class="section-title">Our Leadership</h2><p class="section-lead">Servants of God. Generals in the spirit. They carry the vision and guard the flock.</p></div>
+      <div class="lead-grid">
+        <div class="l-card"><div class="l-photo"><img src="" alt="Founder & Senior Leader"></div><div class="l-info"><div class="l-role">Founder &amp; Senior Leader</div><div class="l-name">Leader Name</div><div class="l-bio">A fire-bearer and vision-carrier. Called to raise a generation unashamed of the gospel, walking in signs and wonders.</div></div></div>
+        <div class="l-card"><div class="l-photo"><img src="" alt="Co-Leader & Intercessor"></div><div class="l-info"><div class="l-role">Co-Leader &amp; Intercessor</div><div class="l-name">Leader Name</div><div class="l-bio">A watchman on the wall, leading intercession with fervour and devotion — discipling young believers into the deep things of God.</div></div></div>
+        <div class="l-card"><div class="l-photo"><img src="" alt="Co-Leader & Teacher"></div><div class="l-info"><div class="l-role">Co-Leader &amp; Teacher</div><div class="l-name">Leader Name</div><div class="l-bio">A Berean by conviction. Grounding the movement in sound doctrine — teaching the Word with clarity, conviction, and prophetic insight.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== EVENTS ========== -->
+  <section id="events">
+    <div class="bg-wrap">
+      <img src="" alt="WOC events">
+      <div class="bg-scrim events-scrim"></div>
+    </div>
+    <div class="inner">
+      <span class="eyebrow">What's on</span>
+      <h2 class="section-title">Events &amp; Programmes</h2>
+      <div class="events-tabs" style="margin-top:36px;">
+        <button class="events-tab active" data-tab="services">Services</button>
+        <button class="events-tab" data-tab="classes">Classes</button>
+        <button class="events-tab" data-tab="events-list">Events</button>
+        <button class="events-tab" data-tab="groups">Groups</button>
+        <button class="events-tab" data-tab="missions">Missions</button>
+      </div>
+
+      <div id="tab-services" class="events-content active">
+        <div class="event-card"><div class="event-img" style="background-image: url('');"></div><div class="event-info"><h3>Sunday Service</h3><p>Join us every Sunday for worship, the Word, and community. All are welcome — come as you are.</p><a href="#contact" class="btn btn-outline btn-sm">Find Out More</a></div></div>
+        <div class="event-card"><div class="event-img" style="background-image: url('');"></div><div class="event-info"><h3>Wednesday Night Service</h3><p>Midweek fire — prayer, worship, and the Word to carry you through the week.</p><a href="#contact" class="btn btn-outline btn-sm">Find Out More</a></div></div>
+      </div>
+
+      <div id="tab-classes" class="events-content">
+        <div class="event-card"><div class="event-img" style="background-image: url('');"></div><div class="event-info"><h3>Foundations of Faith</h3><p>A 6-week class covering the basics of Christian doctrine. Starts March 15.</p><a href="#contact" class="btn btn-outline btn-sm">Learn More</a></div></div>
+        <div class="event-card"><div class="event-img" style="background-image: url('');"></div><div class="event-info"><h3>Prophetic Workshop</h3><p>Learn to hear God's voice and move in spiritual gifts. April 5–6.</p><a href="#contact" class="btn btn-outline btn-sm">Learn More</a></div></div>
+      </div>
+
+      <div id="tab-events-list" class="events-content">
+        <div class="event-card"><div class="event-img" style="background-image: url('');"></div><div class="event-info"><h3>City Outreach Day</h3><p>Join us to share the gospel in our community. March 23, meet at the church at 9 AM.</p><a href="#contact" class="btn btn-outline btn-sm">Learn More</a></div></div>
+        <div class="event-card"><div class="event-img" style="background-image: url('');"></div><div class="event-info"><h3>Easter Celebration</h3><p>Special service with breakfast and activities for all ages. April 20.</p><a href="#contact" class="btn btn-outline btn-sm">Learn More</a></div></div>
+      </div>
+
+      <div id="tab-groups" class="events-content">
+        <div class="event-card"><div class="event-img" style="background-image: url('');"></div><div class="event-info"><h3>Men's Fellowship</h3><p>Monthly breakfast and Bible study. Second Saturday of each month.</p><a href="#contact" class="btn btn-outline btn-sm">Learn More</a></div></div>
+        <div class="event-card"><div class="event-img" style="background-image: url('');"></div><div class="event-info"><h3>Women of Worth</h3><p>A weekly gathering for prayer, encouragement, and fellowship. Tuesdays at 7 PM.</p><a href="#contact" class="btn btn-outline btn-sm">Learn More</a></div></div>
+      </div>
+
+      <div id="tab-missions" class="events-content">
+        <div class="event-card"><div class="event-img" style="background-image: url('');"></div><div class="event-info"><h3>South Africa Mission</h3><p>A week of evangelism and outreach in Johannesburg. June 16–23.</p><a href="#contact" class="btn btn-outline btn-sm">Learn More</a></div></div>
+        <div class="event-card"><div class="event-img" style="background-image: url('');"></div><div class="event-info"><h3>Global Prayer Trip</h3><p>Partner with churches in Kenya for a week of prayer and ministry. August 10–17.</p><a href="#contact" class="btn btn-outline btn-sm">Learn More</a></div></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== MEMBERSHIP FORM ========== -->
+  <section id="membership">
+    <div class="bg-wrap">
+      <img src="" alt="WOC Bible study" style="object-position: center 45%;">
+      <div class="bg-scrim membership-scrim"></div>
+    </div>
+    <div class="inner">
+      <div class="mem-layout">
+        <div class="mem-left"><span class="eyebrow">Membership</span><h2 class="section-title">Join the Warriors</h2><p class="section-lead">Fill in the form to become part of our global network. This isn't a mailing list — it's a covenant community.</p><p class="mem-verse">"Two are better than one, for they have a good return for their labour." — Ecclesiastes 4:9</p></div>
+        <div>
+          <div class="f-row"><div class="f-field"><label>First Name</label><input type="text" id="f-name" placeholder="Your first name"></div><div class="f-field"><label>Surname</label><input type="text" id="f-surname" placeholder="Your surname"></div></div>
+          <div class="f-row full"><div class="f-field"><label>Residence</label><input type="text" id="f-residence" placeholder="City, Province, Country"></div></div>
+          <div class="f-row"><div class="f-field"><label>Marital Status</label><div class="sel-wrap"><select id="f-marital"><option disabled selected>Select status</option><option>Single</option><option>Courtship</option><option>Married</option></select></div></div><div class="f-field"><label>Ministry</label><div class="sel-wrap"><select id="f-ministry"><option disabled selected>Select ministry</option><option>Worshippers</option><option>Teachers</option><option>Financers</option><option>Helps</option><option>Intercessors</option><option>Media</option></select></div></div></div>
+          <div class="f-row full"><div class="f-field"><label>Home Church</label><input type="text" id="f-church" placeholder="Name of your local church"></div></div>
+          <button class="btn btn-fill" style="width:100%; margin-top:6px;" onclick="submitMembership()">Submit Application</button>
+          <div class="success-msg" id="successMsg">Your application has been received — welcome to Warriors of Christ.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== GIVING ========== -->
+  <section id="giving">
+    <div class="glow-orb orb-gold" style="width:700px;height:400px;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.4;"></div>
+    <div class="inner">
+      <div class="giving-card">
+        <div class="bg-wrap"><img src="" alt="WOC ministry event"><div class="bg-scrim" style="background: linear-gradient(90deg, rgba(0,0,0,.93) 30%, rgba(0,0,0,.35) 100%);"></div></div>
+        <div class="giving-copy"><h2>Giving</h2><p>Your generosity transforms lives and spreads God's love in our community and beyond. At WOC, every gift supports our mission of raising faithful warriors who carry the gospel to the nations.</p><a href="#" class="btn btn-glass">Make a Difference Today</a></div>
+      </div>
+      <div class="bank-label">Banking Details</div>
+      <div class="bank-card"><div class="bd"><div class="bd-l">Bank</div><div class="bd-v md">Capitec Bank</div></div><div class="bd"><div class="bd-l">Account Number</div><div class="bd-v big">1501 506 003</div></div><div class="bd"><div class="bd-l">Account Holder</div><div class="bd-v sm">Warriors of Christ</div></div></div>
+      <p class="bank-note">Please use your name as the payment reference. May God multiply what you give a hundredfold.</p>
+    </div>
+  </section>
+
+
+  <!-- ========== CONTACT ========== -->
+  <section id="contact">
+    <div class="bg-wrap"><img src="" alt="WOC community fellowship" style="object-position: center 35%;"><div class="bg-scrim contact-scrim"></div></div>
+    <div class="inner">
+      <span class="eyebrow">Get in touch</span>
+      <h2 class="section-title">Contact us</h2>
+      <div class="contact-layout">
+        <div><p class="section-lead" style="margin-bottom:32px;">We'd love to hear from you. Reach out and a leader will reply soon.</p>
+          <div class="faq">
+            <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">When are your bible study sessions?<span class="faq-icon">+</span></div><div class="faq-a">We host weekly online and in-person Bible study sessions. Follow our social media or reach out directly for the current schedule.</div></div>
+            <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">How can I get involved?<span class="faq-icon">+</span></div><div class="faq-a">Fill in the membership form above. A leader will connect with you and walk you through the next steps.</div></div>
+            <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Do I need to attend a specific church?<span class="faq-icon">+</span></div><div class="faq-a">No — WOC is a ministry network, not a local church. We encourage all members to be planted locally while being part of our broader community.</div></div>
+            <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Is WOC open to all denominations?<span class="faq-icon">+</span></div><div class="faq-a">Yes. We welcome all believers committed to Jesus Christ, sound doctrine, and a life of prayer and service.</div></div>
+            <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">Where are you based?<span class="faq-icon">+</span></div><div class="faq-a">Founded in South Africa, WOC operates as a global network welcoming members from every nation.</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="cf-row full"><div class="cf-field"><label>Name</label><input type="text" id="c-name" placeholder="Jane Smith"></div></div>
+          <div class="cf-row"><div class="cf-field"><label>Contact Reason</label><div class="sel-wrap"><select id="c-reason"><option disabled selected>Select…</option><option>General Enquiry</option><option>Membership</option><option>Prayer Request</option><option>Partnership</option><option>Other</option></select></div></div><div class="cf-field"><label>Email</label><input type="email" id="c-email" placeholder="jane@email.com"></div></div>
+          <div class="cf-row full"><div class="cf-field"><label>Message</label><textarea id="c-msg" placeholder="How can we help you?"></textarea></div></div>
+          <div class="cf-check"><input type="checkbox" id="c-sub"><span>Subscribe to get the latest news and updates from Warriors of Christ</span></div>
+          <button class="btn btn-fill" style="width:100%;" onclick="submitContact()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== FOOTER (Civitas inspired) ========== -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>MENU</h4>
+          <ul class="footer-menu">
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#ministries">Ministries</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+      </div>
+      <div class="footer-col">
+        <h4>SERVICES</h4>
+          <ul class="footer-menu">
+            <li><a href="#">Sunday Worship Services</a></li>
+            <li><a href="#">Midweek Services</a></li>
+            <li><a href="#">Prayer Meetings</a></li>
+            <li><a href="#">Bible Study</a></li>
+          </ul>
+      </div>
+      <div class="footer-col">
+        <h4>GET IN TOUCH</h4>
+        <div class="contact-details">
+          <div class="contact-item">
+            <span class="contact-icon">✉️</span>
+            <span>testing@gmail.com</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <span>+01 23 456 789</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">📍</span>
+            <span>California, USA</span>
+          </div>
+        </div>
+        <div class="social-icons">
+        </div>
+        <div class="social-icons">
+          
+          <!-- Instagram -->
+          <a href="https://instagram.com/yourpage" class="social-circle" target="_blank" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm0 2h10c1.66 0 3 1.34 3 3v10c0 1.66-1.34 3-3 3H7c-1.66 0-3-1.34-3-3V7c0-1.66 1.34-3 3-3zm5 3.5A5.5 5.5 0 1 0 17.5 13 5.5 5.5 0 0 0 12 7.5zm0 2A3.5 3.5 0 1 1 8.5 13 3.5 3.5 0 0 1 12 9.5zm4.75-3.25a1.25 1.25 0 1 0 1.25 1.25 1.25 1.25 0 0 0-1.25-1.25z"/>
+            </svg>
+          </a>
+        
+          <!-- TikTok -->
+          <a href="https://tiktok.com/@yourpage" class="social-circle" target="_blank" aria-label="TikTok">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M16.5 3c.3 1.6 1.6 2.9 3.2 3.2v3.1c-1.2 0-2.4-.4-3.4-1v6.2a5.5 5.5 0 1 1-5.5-5.5c.3 0 .6 0 .9.1v3.2c-.3-.1-.6-.2-.9-.2a2.3 2.3 0 1 0 2.3 2.3V3h3.4z"/>
+            </svg>
+          </a>
+        </div>
+        <a href="#" onclick="openPortal(); return false;" class="member-login-link">Member Login →</a>
+      </div>
+    </div>
+    <div class="footer-credit">
+      © 2026 Warriors of Christ. “Go into all the world and preach the gospel.” – Mark 16:15
+    </div>
+  </footer>
+
+
+  <!-- ========== MEMBER PORTAL OVERLAY ========== -->
+  <div id="portal-overlay">
+    <div class="portal-header">
+      <button class="portal-header-back" onclick="closePortal()">
+        <span class="icon-btn" style="width:32px; height:32px; font-size:14px;">←</span>
+        Back to Home
+      </button>
+      <span class="portal-header-title">Member Portal</span>
+      <button class="icon-btn" onclick="closePortal()" title="Close portal">×</button>
+    </div>
+    <div class="portal-body">
+      <div class="admin-gate" id="adminGate">
+        <div class="admin-gate-title">🔒 Member Access</div>
+        <div class="a-field"><label>5-digit code</label><input type="password" id="member-code" maxlength="5" inputmode="numeric" placeholder="Enter your code" onkeydown="if(event.key==='Enter') portalLogin()"></div>
+        <button class="btn btn-fill" style="width:100%; margin-top:4px;" onclick="portalLogin()">Enter</button>
+        <div class="a-error" id="portalError">Invalid code. Please try again.</div>
+      </div>
+      <div id="portal-content" style="display:none;">
+        <div class="c-tabs" id="portalTabs">
+          <button class="c-tab on" data-tab="testimonies">Testimonies</button>
+          <button class="c-tab" data-tab="prayer">Prayer Requests</button>
+          <button class="c-tab" data-tab="enquiries">Enquiries</button>
+        </div>
+        <div id="tab-testimonies" class="c-panel on">
+          <p class="c-intro">Your testimony is someone else's breakthrough. Don't keep it to yourself.</p>
+          <input class="c-in" type="text" placeholder="Your name" id="t-name">
+          <textarea class="c-ta" placeholder="Share what God has done in your life..." id="t-body"></textarea>
+          <button class="btn btn-fill" onclick="submitCommunity('testimony')">Share Testimony</button>
+          <div id="testimony-list" class="community-posts"></div>
+        </div>
+        <div id="tab-prayer" class="c-panel">
+          <p class="c-intro">Let the warriors agree with you. We carry each other's burdens — that's what family does.</p>
+          <input class="c-in" type="text" placeholder="Your name" id="p-name">
+          <textarea class="c-ta" placeholder="Share your prayer request..." id="p-body"></textarea>
+          <button class="btn btn-fill" onclick="submitCommunity('prayer')">Submit Request</button>
+          <div id="prayer-list" class="community-posts"></div>
+        </div>
+        <div id="tab-enquiries" class="c-panel">
+          <p class="c-intro">Have a question? Our leaders will get back to you personally.</p>
+          <input class="c-in" type="text" placeholder="Your name" id="e-name">
+          <input class="c-in" type="email" placeholder="Your email address" id="e-email">
+          <textarea class="c-ta" placeholder="Your enquiry..." id="e-body"></textarea>
+          <button class="btn btn-fill" onclick="submitCommunity('enquiry')">Send Enquiry</button>
+          <div id="enquiry-list" class="community-posts"></div>
+        </div>
+        <div id="leader-area" style="display:none; margin-top:60px;">
+          <div class="stat-card"><div class="stat-n" id="memberCount">0</div><div class="stat-l">Members Worldwide</div></div>
+          <div style="overflow-x:auto;"><table class="m-table"><thead>汽<th>Name</th><th>Surname</th><th>Residence</th><th>Status</th><th>Ministry</th><th>Church</th> </thead><tbody id="membersBody"></tbody> </div>
+          <div class="leader-extra"><h3>📋 All Community Posts</h3><div id="all-posts" class="community-posts"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
