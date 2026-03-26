@@ -1,5 +1,7 @@
 # Warriors of Christ (WOC) – Website
 
+![WOC Preview](./assets/Preview.png)
+
 A modern, interactive web platform built for the **Warriors of Christ (WOC)** ministry. This website serves as a centralized digital hub where users can engage with the ministry, access key information, and participate in community-driven activities.
 
 ---
